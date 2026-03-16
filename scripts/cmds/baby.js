@@ -5,7 +5,7 @@ module.exports = {
   config: {
     name: "baby",
     version: "1.0.3",
-    author: "ULLASH",
+    author: "RUDRO",
     countDown: 0,
     role: 0,
     shortDescription: "Cute AI Baby Chatbot | Talk, Teach & Chat with Emotion ☢️",
@@ -166,12 +166,12 @@ module.exports = {
       const senderID = event.senderID;
 
       // Trigger words
-      const triggers = ["baby", "bot", "bby", "jan", "xan", "জান", "বট", "বেবি"];
+      const triggers = ["baby", "bot", "bby", "jan", "xan", "জান", "বট", "Rudro", "বেবি"];
       if (triggers.includes(raw)) {
         const greetings = [
           "Bolo baby 💬", "হুম? বলো 😺", "হ্যাঁ জানু 😚", "শুনছি বেবি 😘",
           "এতো ডেকো না,প্রেম এ পরে যাবো তো🙈", "Boss বল boss😼",
-          "আমাকে ডাকলে ,আমি কিন্তু কিস করে দিবো😘", "দূরে যা, তোর কোনো কাজ নাই, শুধু bot bot করিস 😉😋🤣"
+          "আমাকে ডাকলে ,আমি কিন্তু কিস করে দিবো😘", "দূরে যা, তোর কোনো কাজ নাই, 😉😋🤣"
         ];
         const randomReply = greetings[Math.floor(Math.random() * greetings.length)];
 
