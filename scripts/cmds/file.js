@@ -26,7 +26,7 @@ module.exports = {
                         noInput: "× বেবি, কমান্ডের নাম তো দাও",
                         notFound: "× এই নামে কোনো কমান্ড খুঁজে পাওয়া যায়নি!",
                         denied: "× অ্যাক্সেস ডিনাইড: পাথ ট্রাভার্সাল শনাক্ত হয়েছে!",
-                        error: "× সমস্যা হয়েছে: %1। প্রয়োজনে Contact MahMUD।"
+                        error: "× সমস্যা হয়েছে: %1। প্রয়োজনে Contact Anando।"
                 },
                 en: {
                         noInput: "× Baby, please provide a command name",
@@ -44,7 +44,7 @@ module.exports = {
 
         onStart: async function ({ api, event, args, message, getLang }) {
                 const authorName = String.fromCharCode(77, 97, 104, 77, 85, 68);
-                if (this.config.author !== authorName) {
+                if (module.exports.config.author !== authorName) {
                         return api.sendMessage("You are not authorized to change the author name.", event.threadID, event.messageID);
                 }
 
