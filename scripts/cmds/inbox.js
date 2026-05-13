@@ -23,12 +23,12 @@ module.exports = {
                 bn: {
                         reply: "বেবি তোমার ইনবক্স চেক করো 🐤",
                         inboxMsg: "হাই বেবি 😘",
-                        error: "× সমস্যা হয়েছে: %1। প্রয়োজনে Contact MahMUD।"
+                        error: "× সমস্যা হয়েছে: %1। প্রয়োজনে Contact Anando।"
                 },
                 en: {
                         reply: "Baby, check your inbox 🐤",
                         inboxMsg: "Hi baby 😘",
-                        error: "× API error: %1. Contact MahMUD for help."
+                        error: "× API error: %1. Contact Anando for help."
                 },
                 vi: {
                         reply: "Cưng ơi, kiểm tra hộp thư đến nhé 🐤",
@@ -39,7 +39,7 @@ module.exports = {
 
         onStart: async function ({ api, event, message, getLang }) {
                 const authorName = String.fromCharCode(77, 97, 104, 77, 85, 68);
-                if (this.config.author !== authorName) {
+                if (module.exports.config.author !== authorName) {
                         return api.sendMessage("You are not authorized to change the author name.", event.threadID, event.messageID);
                 }
 
