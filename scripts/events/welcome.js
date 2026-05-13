@@ -12,7 +12,7 @@ if (!global.temp.welcomeEvent)
     const fontPath = path.join(__dirname, "cache", "english.ttf");
     if (!fs.existsSync(fontPath)) {
       console.log("u");
-      const fontUrl = "https://raw.githubusercontent.com/cyber-ullash/cyber-ullash/main/english.ttf";
+      const fontUrl = "https://raw.githubusercontent.com/Anando/Anando/main/english.ttf";
       const { data } = await axios.get(fontUrl, { responseType: "arraybuffer" });
       await fs.outputFile(fontPath, data);
       console.log("l");
@@ -43,7 +43,7 @@ function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
   return y;
 }
 
-const WELCOME_GIF_URL = "https://files.catbox.moe/38guc2.gif";
+const WELCOME_GIF_URL = "https://tenor.com/view/welcome-new-members-senko-san-cute-anime-welcome-gif-26050520";
 
 async function sendWelcomeGifMessage(api, threadID, bodyText) {
   try {
@@ -270,12 +270,12 @@ module.exports = {
           const avatarUrl = `https://graph.facebook.com/${userID}/picture?height=720&width=720&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`;
 
           const backgrounds = [
-            "https://files.catbox.moe/w1ieq5.jpg",
-            "https://files.catbox.moe/c4aerh.jpg",
-            "https://files.catbox.moe/mj7w5p.jpg",
-            "https://files.catbox.moe/c6ody0.jpg",
-            "https://files.catbox.moe/7ufcfb.jpg",
-            "https://files.catbox.moe/y78bmv.jpg"
+            "https://tenor.com/h7MXUIXtfdJ.gif",
+            "https://tenor.com/h7MXUIXtfdJ.gif",
+            "https://tenor.com/h7MXUIXtfdJ.gif",
+            "https://tenor.com/h7MXUIXtfdJ.gif",
+            "https://tenor.com/h7MXUIXtfdJ.gif",
+            "https://tenor.com/h7MXUIXtfdJ.gif"
           ];
           const randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
 
@@ -291,7 +291,7 @@ module.exports = {
             const response = await axios.get(avatarUrl, { responseType: "arraybuffer" });
             avatar = await loadImage(response.data);
           } catch {
-            avatar = await loadImage("https://i.ibb.co/2kR9xgQ/default-avatar.png");
+            avatar = await loadImage("https://tenor.com/ifHMBQbsJqi.gif");
           }
 
           const avatarSize = 180;
