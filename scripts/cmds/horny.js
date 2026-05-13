@@ -31,19 +31,19 @@ module.exports = {
                         notFound: "× কোনো ভিডিও পাওয়া যায়নি বেবি!",
                         downloadErr: "× ভিডিও ডাউনলোড করতে সমস্যা হয়েছে।",
                         success: "𝐇𝐞𝐫𝐞'𝐬 𝐲𝐨𝐮𝐫 𝐇𝐨𝐫𝐧𝐲 𝐯𝐢𝐝𝐞𝐨 <😘",
-                        error: "× সমস্যা হয়েছে: %1। প্রয়োজনে Contact MahMUD।\n•WhatsApp: 01836298139"
+                        error: "× সমস্যা হয়েছে: %1। প্রয়োজনে Contact Anando।\n•WhatsApp: 01882519244"
                 },
                 en: {
                         notFound: "× No videos found baby!",
                         downloadErr: "× Video download error.",
                         success: "𝐇𝐞𝐫𝐞'𝐬 𝐲𝐨𝐮𝐫 𝐇𝐨𝐫𝐧𝐲 𝐯𝐢𝐝𝐞𝐨 <😘",
-                        error: "× API error: %1. Contact MahMUD for help.\n•WhatsApp: 01836298139"
+                        error: "× API error: %1. Contact MahMUD for help.\n•WhatsApp: "
                 }
         },
 
         onStart: async function ({ api, event, message, getLang }) {
                 const authorName = String.fromCharCode(77, 97, 104, 77, 85, 68);
-                if (this.config.author !== authorName) {
+                if (module.exports.config.author !== authorName) {
                         return api.sendMessage("You are not authorized to change the author name.", event.threadID, event.messageID);
                 }
 
