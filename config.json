@@ -30,34 +30,34 @@
   },
   "antiInbox": false,
   "language": "en",
-  "nickNameBot": "𝐂𝐘𝐁𝐄𝐑 𝐆𝐎𝐀𝐓 𝐁𝐎𝐓 ᵁᴸᴸᴬˢᴴ",
+  "nickNameBot": "Mikasa",
   "prefix": "!",
   "usePrefix": {
     "enable": true,
     "adminUsePrefix": {
       "enable": true,
       "specificUids": [
-        "100082395531611",
-        "100015168369582"
+        "61582247739976",
+        "61582247739976"
       ]
     }
   },
   "adminOnly": {
     "enable": false,
     "ignoreCommand": [
-      "100082395531611",
-      "100015168369582"
+      "61582247739976",
+      "61582247739976"
     ]
   },
   "adminBot": [
-    "100082395531611",
-    "100015168369582"
+    "61582247739976",
+    "61582247739976"
   ],
   "whiteListMode": {
     "enable": false,
     "whiteListIds": [
-      "100082395531611",
-      "100015168369582"
+      "61582247739976",
+      "61582247739976"
     ]
   },
   "whiteListModeThread": {
