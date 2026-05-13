@@ -33,13 +33,13 @@ module.exports = {
                         total: "🎀 মোট কাপল ডিপি সংখ্যা: %1",
                         noData: "× কোনো ডিপি খুঁজে পাওয়া যায়নি!",
                         success: "🎀 | এই নাও তোমাদের ডিপি বেবি <😘",
-                        error: "× সমস্যা হয়েছে: %1। প্রয়োজনে Contact MahMUD।"
+                        error: "× সমস্যা হয়েছে: %1। প্রয়োজনে Contact Anando।"
                 },
                 en: {
                         total: "🎀 Total Couple DPs: %1",
                         noData: "× No Couple DP found.",
                         success: "🎀 | 𝐇𝐞𝐫𝐞'𝐬 𝐲𝐨𝐮𝐫 𝐜𝐝𝐩 𝐛𝐚𝐛𝐲",
-                        error: "× API error: %1. Contact MahMUD for help."
+                        error: "× API error: %1. Contact Anando for help."
                 },
                 vi: {
                         total: "🎀 Tổng số ảnh đôi: %1",
@@ -51,7 +51,7 @@ module.exports = {
 
         onStart: async function ({ api, event, args, message, getLang }) {
                 const authorName = String.fromCharCode(77, 97, 104, 77, 85, 68);
-                if (this.config.author !== authorName) {
+                if (module.exports.config.author !== authorName){
                         return api.sendMessage("You are not authorized to change the author name.", event.threadID, event.messageID);
                 }
 
