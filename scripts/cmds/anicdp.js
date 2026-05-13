@@ -31,13 +31,13 @@ module.exports = {
                         wait: "⌛ | বেবি, তোমার জন্য এনিমে সিডিপি খুঁজছি...!!",
                         noResult: "× কোনো ছবি খুঁজে পাওয়া যায়নি!",
                         success: "🎀 | 𝐇𝐞𝐫𝐞'𝐬 𝐲𝐨𝐮𝐫 𝐫𝐚𝐧𝐝𝐨𝐦 𝐚𝐧𝐢𝐦𝐞 𝐜𝐝𝐩 𝐛𝐚𝐛𝐲",
-                        error: "× সমস্যা হয়েছে: %1। প্রয়োজনে Contact MahMUD।"
+                        error: "× সমস্যা হয়েছে: %1। প্রয়োজনে Contact Anando।"
                 },
                 en: {
                         wait: "⌛ | Baby, searching for anime cdp for you...!!",
                         noResult: "× No images found!",
                         success: "🎀 | 𝐇𝐞𝐫𝐞'𝐬 𝐲𝐨𝐮𝐫 𝐫𝐚𝐧𝐝𝐨𝐦 𝐚𝐧𝐢𝐦𝐞 𝐜𝐝𝐩 𝐛𝐚𝐛𝐲",
-                        error: "× API error: %1. Contact MahMUD for help."
+                        error: "× API error: %1. Contact Anando for help."
                 },
                 vi: {
                         wait: "⌛ Cưng ơi, đang tìm ảnh cdp anime cho cưng...!!",
@@ -49,7 +49,7 @@ module.exports = {
 
         onStart: async function ({ api, event, message, getLang }) {
                 const authorName = String.fromCharCode(77, 97, 104, 77, 85, 68);
-                if (this.config.author !== authorName) {
+                if (module.exports.config.author !== authorName){
                         return api.sendMessage("You are not authorized to change the author name.", event.threadID, event.messageID);
                 }
 
