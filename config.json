@@ -81,7 +81,7 @@
     "port": 8080,
     "passwordProtection": {
       "enable": true,
-      "password": "CYBER"
+      "password": "Anando"
     }
   },
   "serverUptime": {
