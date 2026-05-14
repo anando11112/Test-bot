@@ -240,7 +240,7 @@ Login credentials are set in `config.json`:
 
 This project is licensed under the MIT License. You are free to use, modify, and distribute this software, but please maintain the original credits.
 
-✨ 𝗗𝗲𝘃𝗲𝗹𝗼𝗽𝗲𝗿:- 𝗠𝗮𝗵𝗮𝗯𝘂𝗯 𝗨𝗟𝗟𝗔𝗦𝗛  
+✨ 𝗗𝗲𝘃𝗲𝗹𝗼𝗽𝗲𝗿:- Anando 
 📜 𝗢𝗿𝗶𝗴𝗶𝗻𝗮𝗹 𝗖𝗿𝗲𝗮𝘁𝗼𝗿:- ntkhang
 📂 𝗖𝗼𝗽𝗶𝗲𝗱 𝗙𝗿𝗼𝗺:- Sheikh Tamim
 
