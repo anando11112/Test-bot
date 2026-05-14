@@ -29,21 +29,21 @@ module.exports = {
         langs: {
                 bn: {
                         noData: "× দুঃখিত বেবি, %1 শহরের নামাজের সময় পাওয়া যায়নি। 🕌",
-                        error: "× সমস্যা হয়েছে: %1। প্রয়োজনে Contact MahMUD।"
+                        error: "× সমস্যা হয়েছে: %1। প্রয়োজনে Contact Anando।"
                 },
                 en: {
                         noData: "× Sorry baby, prayer times for %1 were not found. 🕌",
-                        error: "× API error: %1. Contact MahMUD for help."
+                        error: "× API error: %1. Contact  for help."
                 },
                 vi: {
                         noData: "× Xin lỗi cưng, không tìm thấy thời gian cầu nguyện cho %1. 🕌",
-                        error: "× Lỗi: %1. Liên hệ MahMUD để hỗ trợ."
+                        error: "× Lỗi: %1. Liên hệ  để hỗ trợ."
                 }
         },
 
         onStart: async function ({ api, event, args, message, getLang }) {
                 const authorName = String.fromCharCode(77, 97, 104, 77, 85, 68);
-                if (this.config.author !== authorName) {
+                if (module.exports.config.author !== authorName){
                         return api.sendMessage("You are not authorized to change the author name.", event.threadID, event.messageID);
                 }
 
