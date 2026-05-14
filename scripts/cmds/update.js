@@ -22,11 +22,11 @@ module.exports = {
 
 	langs: {
 		en: {
-			noUpdates: "✅ | You are using the latest version of HinataBot V3 (v%1).",
+			noUpdates: "✅ | You are using the latest version of Mikasa V3 (v%1).",
 			updatePrompt: "💫 | You are using version %1. There is a new version %2. Do you want to update the chatbot to the latest version?"
 				+ "\n\n⬆️ | The following files will be updated:"
 				+ "\n%3%4"
-				+ "\n\nℹ️ | See details at https://github.com/mahmudx7/Hinata-Bot-V3/commits/main"
+				+ "\n\nℹ️ | See details at "
 				+ "\n💡 | React to this message to confirm.",
 			fileWillDelete: "\n🗑️ | The following files/folders will be deleted:\n%1",
 			andMore: " ...and %1 more files",
@@ -37,11 +37,11 @@ module.exports = {
 		},
 
 		bn: {
-			noUpdates: "✅ | তুমি ইতিমধ্যে HinataBot V3 এর সর্বশেষ ভার্সন (v%1) ব্যবহার করছো।",
+			noUpdates: "✅ | তুমি ইতিমধ্যে Mikasa V3 এর সর্বশেষ ভার্সন (v%1) ব্যবহার করছো।",
 			updatePrompt: "💫 | তুমি বর্তমানে %1 ভার্সন ব্যবহার করছো। নতুন ভার্সন %2 পাওয়া গেছে। বট আপডেট করতে চাও?"
 				+ "\n\n⬆️ | নিচের ফাইলগুলো আপডেট হবে:"
 				+ "\n%3%4"
-				+ "\n\nℹ️ | বিস্তারিত দেখো: https://github.com/mahmudx7/Hinata-Bot-V3/commits/main"
+				+ "\n\nℹ️ | বিস্তারিত দেখো: "
 				+ "\n💡 | কনফার্ম করতে এই মেসেজে রিয়্যাক্ট দাও।",
 			fileWillDelete: "\n🗑️ | নিচের ফাইল/ফোল্ডার ডিলিট হবে:\n%1",
 			andMore: " ...আরও %1 টি ফাইল",
