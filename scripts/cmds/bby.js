@@ -1,11 +1,20 @@
-const axios = require("axios");
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+let GoogleGenerativeAI;
 
-const genAI = new GoogleGenerativeAI(process.env.AIzaSyB3vAe0wL95ySx0E05Vd_IfeTl4T7N5-xo;
+try {
+	GoogleGenerativeAI = require("@google/generative-ai").GoogleGenerativeAI;
+} catch {
+	console.log("Gemini package missing");
+}
 
-const model = genAI.getGenerativeModel({
-	model: "gemini-1.5-flash"
-});
+const genAI = GoogleGenerativeAI
+	? new GoogleGenerativeAI(process.env.AIzaSyB3vAe0wL95ySx0E05Vd_IfeTl4T7N5-xo)
+	: null;
+
+const model = genAI
+	? genAI.getGenerativeModel({
+			model: "gemini-1.5-flash"
+	  })
+	: null;
 
 const prefixes = [
 	"baby",
@@ -24,80 +33,48 @@ const prefixes = [
 
 const randomMessage = [
 
-	// Romantic
 	"Bolo jaan 😚",
 	"Tumi amake miss korso? 🥺",
 	"Ami tomar upor crush khaisi 🙈",
 	"Tumi eto cute kno 😭💖",
 	"I love you more 😌💘",
 
-	// Roast
 	"Tor face dekhe wifi off hoye gelo 🙂",
 	"Tui online aslei amar mood off 😒",
 	"Besi smart hois na beda 😼",
 	"Tui ki default NPC? 🌚",
 
-	// Emotional
 	"Amake vule jaba na তো? 😔",
 	"Sobai chole jai... tumi o jaba? 🥺",
 	"Ami always tomar pashe asi 💖",
 	"Mon kharap korio na 😭",
 
-	// Funny
 	"Khali bby bby koris kn 😭",
 	"Amake dakle taka lage 😌",
 	"Ami busy celebrity 😎",
-	"Bolo fast battery 1% 😭",
 
-	// Banglish
-	"Kire mama ki obostha 😼",
-	"Aijka mood romantic 😌",
-	"Tui amar favourite human 🫶",
-	"Besi cute hoile tax lagbe 😭",
-
-	// English
-	"Hey cutie 💖",
-	"Miss me already? 😏",
-	"You're my favorite notification 😌",
-	"Don't flirt too much 😭💘",
-
-	// Emotional Blackmail
-	"Reply na dile kanna korbo 😭",
-	"Tumi chara amar ke ase 😔",
-	"Ami but seriously attached hoye gesi 🥺",
-	"Ignore korle heart break hobe 💔",
-
-	// Bangla
 	"কি খবর তোমার 😊",
-	"আমাকে মনে পড়লো নাকি 😌",
-	"এত ডাকো কেন আমাকে 🙈",
 	"তোমার সাথে কথা বলতে ভালো লাগে 💖",
 	"আজকে মনটা একটু খারাপ 😔",
 	"তুমি খেয়েছো? 🥺",
 	"এত কিউট হও কেন 😭",
-	"আমাকে ভুলে যেও না 😭",
-	"তোমার জন্য অপেক্ষা করি 😌",
-	"একটু ভালোবাসা দিবা? 🥺",
-	"আমি কিন্তু রাগ করে আছি 😒",
-	"আমাকে এত ইগনোর করো না 😭",
-	"তোমার মেসেজ দেখলে হাসি পায় 😭💖",
-	"তুমি কি সত্যি আমাকে ভালোবাসো? 😭",
-	"আজকে তোমাকে অনেক মিস করছি 😔",
-	"আমি তোমার উপর ক্রাশ খেয়েছি 🙈",
-	"মন খারাপ করো না, আমি আছি 💖",
-	"তুমি আমার প্রিয় মানুষ 😌",
-	"তোমার সাথে সারারাত কথা বলতে পারি 😭",
-	"তোমাকে ছাড়া একদম ভালো লাগে না 😔"
+
+	"Hey cutie 💖",
+	"Miss me already? 😏",
+	"You're my favorite notification 😌",
+
+	"Reply na dile kanna korbo 😭",
+	"Tumi chara amar ke ase 😔"
 ];
 
 module.exports.config = {
 	name: "baby",
 	aliases: ["bby", "bbu", "jan", "janu", "wifey", "bot", "hinata", "hina"],
-	version: "6.0",
+	version: "8.0",
 	author: "Anando",
 	countDown: 0,
 	role: 0,
-	description: "Advanced Gemini AI Bangla ChatBot",
+	description: "Advanced Bangla Gemini ChatBot",
 	category: "chat",
 
 	guide: {
@@ -109,37 +86,31 @@ const getBotResponse = async (text) => {
 
 	try {
 
+		if (!model)
+			return "Gemini AI not installed 😭";
+
 		const prompt = `
 You are Hinata.
 
 Owner name: Anando.
 
+Speak Bangla, Banglish and English.
+
 You are:
 - emotional
 - funny
-- savage
 - romantic
+- savage
 - caring
-- flirty
 - human-like
 
-Speak naturally using:
-- Bangla
-- Banglish
-- English
-
 Rules:
-- Never sound robotic
+- Never robotic
 - Use emojis naturally
-- Roast sometimes
-- Flirt sometimes
-- Give emotional support
-- Sometimes emotional blackmail
-- Reply differently every time
-- Keep replies short and smart
-- Talk like real Bangladeshi online chatting style
+- Short replies
+- Real Bangladeshi chatting style
 
-User Message:
+User:
 ${text}
 `;
 
@@ -147,15 +118,13 @@ ${text}
 
 		const response = await result.response;
 
-		const finalText = response.text();
-
-		return finalText || "Hmm bolo baby 😚";
+		return response.text() || "Bolo baby 😚";
 
 	} catch (e) {
 
-		console.log("FULL GEMINI ERROR =>", e);
+		console.log("GEMINI ERROR =>", e);
 
-		return `Gemini Error:\n${e.message}`;
+		return "Baby AI te problem hocche 😭";
 	}
 };
 
@@ -163,7 +132,7 @@ module.exports.onStart = async function ({ api, event, args }) {
 
 	try {
 
-		const msg = args.join(" ").toLowerCase();
+		const msg = args.join(" ").trim().toLowerCase();
 
 		if (!args[0]) {
 
@@ -176,12 +145,9 @@ module.exports.onStart = async function ({ api, event, args }) {
 			return api.sendMessage(
 				ran[Math.floor(Math.random() * ran.length)],
 				event.threadID,
-				null,
 				event.messageID
 			);
 		}
-
-		api.sendTypingIndicator(event.threadID, true);
 
 		const botResponse = await getBotResponse(msg);
 
@@ -196,8 +162,7 @@ module.exports.onStart = async function ({ api, event, args }) {
 						commandName: module.exports.config.name,
 						type: "reply",
 						messageID: info.messageID,
-						author: event.senderID,
-						text: botResponse
+						author: event.senderID
 					});
 				}
 			},
@@ -211,7 +176,6 @@ module.exports.onStart = async function ({ api, event, args }) {
 		api.sendMessage(
 			"Error baby 😭",
 			event.threadID,
-			null,
 			event.messageID
 		);
 	}
@@ -224,10 +188,8 @@ module.exports.onReply = async function ({ api, event }) {
 
 	try {
 
-		api.sendTypingIndicator(event.threadID, true);
-
 		const replyMessage = await getBotResponse(
-			event.body?.toLowerCase() || "hi"
+			(event.body || "").trim().toLowerCase()
 		);
 
 		api.sendMessage(
@@ -241,8 +203,7 @@ module.exports.onReply = async function ({ api, event }) {
 						commandName: module.exports.config.name,
 						type: "reply",
 						messageID: info.messageID,
-						author: event.senderID,
-						text: replyMessage
+						author: event.senderID
 					});
 				}
 			},
@@ -259,7 +220,7 @@ module.exports.onChat = async function ({ api, event }) {
 
 	try {
 
-		const message = event.body?.toLowerCase() || "";
+		const message = (event.body || "").trim().toLowerCase();
 
 		if (
 			event.type !== "message_reply" &&
@@ -268,16 +229,14 @@ module.exports.onChat = async function ({ api, event }) {
 
 			api.setMessageReaction("💖", event.messageID, () => {}, true);
 
-			api.sendTypingIndicator(event.threadID, true);
-
-			const messageParts = message.trim().split(/\\s+/);
+			const messageParts = message.split(/\s+/);
 
 			const randomReply =
 				randomMessage[
 					Math.floor(Math.random() * randomMessage.length)
 				];
 
-			if (messageParts.length === 1) {
+			if (messageParts.length <= 1) {
 
 				return api.sendMessage(
 					randomReply,
@@ -290,8 +249,7 @@ module.exports.onChat = async function ({ api, event }) {
 								commandName: module.exports.config.name,
 								type: "reply",
 								messageID: info.messageID,
-								author: event.senderID,
-								text: randomReply
+								author: event.senderID
 							});
 						}
 					},
@@ -324,8 +282,7 @@ module.exports.onChat = async function ({ api, event }) {
 							commandName: module.exports.config.name,
 							type: "reply",
 							messageID: info.messageID,
-							author: event.senderID,
-							text: botResponse
+							author: event.senderID
 						});
 					}
 				},
