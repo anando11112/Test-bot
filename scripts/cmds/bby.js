@@ -1,7 +1,7 @@
 const axios = require("axios");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-const genAI = new GoogleGenerativeAI("AIzaSyB2-Eu4z1rfx16RZ1SfapyeDjcqA-GZS5A");
+const genAI = new GoogleGenerativeAI(process.env.AIzaSyA8vXx0JODtN3BAXvrLZ4WQy-LjDPA51B4;
 
 const model = genAI.getGenerativeModel({
 	model: "gemini-1.5-flash"
@@ -23,38 +23,31 @@ const prefixes = [
 ];
 
 const randomMessage = [
-
 	"Bolo jaan 😚",
 	"Tumi amake miss korso? 🥺",
 	"Ami tomar upor crush khaisi 🙈",
 	"Tumi eto cute kno 😭💖",
 	"I love you more 😌💘",
-
 	"Tor face dekhe wifi off hoye gelo 🙂",
 	"Tui online aslei amar mood off 😒",
 	"Besi smart hois na beda 😼",
 	"Tui ki default NPC? 🌚",
-
 	"Amake vule jaba na তো? 😔",
 	"Sobai chole jai... tumi o jaba? 🥺",
 	"Ami always tomar pashe asi 💖",
 	"Mon kharap korio na 😭",
-
 	"Khali bby bby koris kn 😭",
 	"Amake dakle taka lage 😌",
 	"Ami busy celebrity 😎",
 	"Bolo fast battery 1% 😭",
-
 	"Kire mama ki obostha 😼",
 	"Aijka mood romantic 😌",
 	"Tui amar favourite human 🫶",
 	"Besi cute hoile tax lagbe 😭",
-
 	"Hey cutie 💖",
 	"Miss me already? 😏",
 	"You're my favorite notification 😌",
 	"Don't flirt too much 😭💘",
-
 	"Reply na dile kanna korbo 😭",
 	"Tumi chara amar ke ase 😔",
 	"Ami but seriously attached hoye gesi 🥺",
@@ -64,7 +57,7 @@ const randomMessage = [
 module.exports.config = {
 	name: "baby",
 	aliases: ["bby", "bbu", "jan", "janu", "wifey", "bot", "hinata", "hina"],
-	version: "3.0",
+	version: "4.0",
 	author: "Anando",
 	countDown: 0,
 	role: 0,
@@ -115,13 +108,15 @@ ${text}
 
 		const result = await model.generateContent(prompt);
 
-		return result.response.text();
+		const response = result.response.text();
+
+		return response || "Hmm bolo baby 😚";
 
 	} catch (e) {
 
-		console.log(e);
+		console.log("GEMINI ERROR:", e);
 
-		return "Awww baby error hocche 😭";
+		return "🥺 Baby API problem hocche";
 	}
 };
 
@@ -236,7 +231,7 @@ module.exports.onChat = async function ({ api, event }) {
 
 			api.sendTypingIndicator(event.threadID, true);
 
-			const messageParts = message.trim().split(/\s+/);
+			const messageParts = message.trim().split(/\\s+/);
 
 			const randomReply =
 				randomMessage[
