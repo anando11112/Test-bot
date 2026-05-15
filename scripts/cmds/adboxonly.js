@@ -5,16 +5,22 @@ module.exports = {
 		version: "1.3",
 		author: "NTKhang",
 		countDown: 5,
-		role: 1,
+		role: 0,
+
 		description: {
-			vi: "bật/tắt chế độ chỉ quản trị của viên nhóm mới có thể sử dụng bot",
+			vi: "bật/tắt chế độ chỉ quản trị viên nhóm mới có thể sử dụng bot",
 			en: "turn on/off only admin box can use bot"
 		},
+
 		category: "box chat",
+
 		guide: {
-			vi: "   {pn} [on | off]: bật/tắt chế độ chỉ quản trị viên nhóm mới có thể sử dụng bot"
+			vi:
+				"   {pn} [on | off]: bật/tắt chế độ chỉ quản trị viên nhóm mới có thể sử dụng bot"
 				+ "\n   {pn} noti [on | off]: bật/tắt thông báo khi người dùng không phải là quản trị viên nhóm sử dụng bot",
-			en: "   {pn} [on | off]: turn on/off the mode only admin of group can use bot"
+
+			en:
+				"   {pn} [on | off]: turn on/off the mode only admin of group can use bot"
 				+ "\n   {pn} noti [on | off]: turn on/off the notification when user is not admin of group use bot"
 		}
 	},
@@ -25,18 +31,36 @@ module.exports = {
 			turnedOff: "Đã tắt chế độ chỉ quản trị viên nhóm mới có thể sử dụng bot",
 			turnedOnNoti: "Đã bật thông báo khi người dùng không phải là quản trị viên nhóm sử dụng bot",
 			turnedOffNoti: "Đã tắt thông báo khi người dùng không phải là quản trị viên nhóm sử dụng bot",
-			syntaxError: "Sai cú pháp, chỉ có thể dùng {pn} on hoặc {pn} off"
+			syntaxError: "Sai cú pháp, chỉ có thể dùng {pn} on hoặc {pn} off",
+			noPermission: "❌ | Chỉ bot admin hoặc group admin mới có thể dùng lệnh này"
 		},
+
 		en: {
 			turnedOn: "Turned on the mode only admin of group can use bot",
 			turnedOff: "Turned off the mode only admin of group can use bot",
 			turnedOnNoti: "Turned on the notification when user is not admin of group use bot",
 			turnedOffNoti: "Turned off the notification when user is not admin of group use bot",
-			syntaxError: "Syntax error, only use {pn} on or {pn} off"
+			syntaxError: "Syntax error, only use {pn} on or {pn} off",
+			noPermission: "❌ | Only bot admin or group admin can use this command"
 		}
 	},
 
 	onStart: async function ({ args, message, event, threadsData, getLang }) {
+
+		const { senderID, adminIDs = [] } = event;
+
+		const isBotAdmin =
+			global.config.adminBot.includes(senderID);
+
+		const isGroupAdmin =
+			adminIDs.some(item => item.id == senderID);
+
+		if (!isBotAdmin && !isGroupAdmin) {
+			return message.reply(
+				getLang("noPermission")
+			);
+		}
+
 		let isSetNoti = false;
 		let value;
 		let keySetData = "data.onlyAdminBox";
@@ -50,16 +74,33 @@ module.exports = {
 
 		if (args[indexGetVal] == "on")
 			value = true;
+
 		else if (args[indexGetVal] == "off")
 			value = false;
-		else
-			return message.reply(getLang("syntaxError"));
 
-		await threadsData.set(event.threadID, isSetNoti ? !value : value, keySetData);
+		else
+			return message.reply(
+				getLang("syntaxError")
+			);
+
+		await threadsData.set(
+			event.threadID,
+			isSetNoti ? !value : value,
+			keySetData
+		);
 
 		if (isSetNoti)
-			return message.reply(value ? getLang("turnedOnNoti") : getLang("turnedOffNoti"));
+			return message.reply(
+				value
+					? getLang("turnedOnNoti")
+					: getLang("turnedOffNoti")
+			);
+
 		else
-			return message.reply(value ? getLang("turnedOn") : getLang("turnedOff"));
+			return message.reply(
+				value
+					? getLang("turnedOn")
+					: getLang("turnedOff")
+			);
 	}
 };
