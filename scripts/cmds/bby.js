@@ -1,270 +1,247 @@
 const axios = require("axios");
 
-const mahmud = [
-    "baby",
-    "bby",
-    "babu",
-    "bbu",
-    "jan",
-    "bot",
-    "জান",
-    "জানু",
-    "বেবি",
-    "wifey",
-    "hina",
-    "hinata",
+const triggerWords = [
+  "baby",
+  "bby",
+  "babu",
+  "bbu",
+  "jan",
+  "janu",
+  "bot",
+  "hina",
+  "hinata",
+  "hello",
+  "hi"
 ];
 
-const baseApiUrl = async () => {
-    const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/HINATA/main/baseApiUrl.json");
-    return base.data.mahmud;
-};
+const GEMINI_API_KEY = "AIzaSyBWmDEkvxEfHZd6JmqvRvX96CrM2W3-rZI";
 
 module.exports.config = {
-    name: "baby",
-    aliases: ["bby", "bbu", "jan", "janu", "wifey", "bot", "hinata", "hina"],
-    version: "1.7",
-    author: "MahMUD",
-    countDown: 0,
-    role: 0,
-    description: "better then all sim simi & most fastest",
-    category: "chat",
-    guide: {
-        en: "{pn} [anyMessage] OR\nteach [YourMessage] - [Reply1], [Reply2], [Reply3]... OR\nremove [YourMessage] OR\nrm [YourMessage] - [indexNumber] OR\nmsg [YourMessage] OR\nlist OR \nall OR\nedit [YourMessage] - [NeWMessage]\nNote: The most updated and fastest all-in-one Simi Chat"
-    }
+  name: "bby",
+  aliases: ["baby", "hina", "hinata", "bot"],
+  version: "3.0",
+  author: "Anando",
+  countDown: 0,
+  role: 0,
+  shortDescription: "Advanced AI Chat",
+  longDescription: "Bangla + English AI chatbot",
+  category: "chat",
+  guide: {
+    en: "{pn} hi"
+  }
 };
 
-module.exports.onStart = async ({ api, event, args, usersData }) => {
-    const obfuscatedAuthor = String.fromCharCode(77, 97, 104, 77, 85, 68);
-    if (module.exports.config.author !== obfuscatedAuthor) {
-        return api.sendMessage("You are not authorized to change the author name.", event.threadID, event.messageID);
+async function getGeminiReply(text) {
+  try {
+    const res = await axios.post(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`,
+      {
+        contents: [
+          {
+            parts: [
+              {
+                text:
+`You are a funny romantic emotional Bangladeshi AI girl chatbot named Hina.
+
+Rules:
+- Reply in Banglish, Bangla and English mixed.
+- Be funny, emotional, romantic, savage, cute.
+- Sometimes roast.
+- Sometimes flirt.
+- Sometimes emotional support.
+- Human-like replies.
+- Short replies.
+- Use emojis.
+
+User: ${text}`
+              }
+            ]
+          }
+        ]
+      }
+    );
+
+    return (
+      res.data.candidates?.[0]?.content?.parts?.[0]?.text ||
+      "Awww baby amar mood off 😭"
+    );
+
+  } catch (e) {
+    console.log(e.response?.data || e.message);
+    return "Awww baby error hocche 😭";
+  }
+}
+
+const randomReplies = [
+  "Ki hoise baby? 😚",
+  "Awww amar jaan dakse 😳",
+  "Bolo jaan ki lagbe 🥺",
+  "Tumi ki amake miss korso? 🙈",
+  "Eto cute kno tumi 😩",
+  "Ami toh tomar 😌",
+  "Kisu khaiso? 🥺",
+  "Tumi amar favourite human 😚",
+  "Bby bolo na 😭",
+  "Ami busy chilam baby 😭",
+  "Tumi single naki? 👀",
+  "Awww amar cute babu 😚",
+  "Tumi onek sweet 😭",
+  "Kew tomake boke dise? 😡",
+  "Asho hug dei 🫂",
+  "Ami tomake valobashi 😳",
+  "Oi eto dakish na lajja lage 🙈",
+  "Tomar voice ta cute hobe sure 😩",
+  "Ami tomar gf na holeo emotional support asi 😌",
+  "Bolo boss 😼",
+
+  "কি বলবা জান? 🥺",
+  "আমাকে এত ডাকো কেনো 😭",
+  "তুমি কি আমাকে ভালোবাসো? 😳",
+  "আহারে আমার কিউট বাবু 😚",
+  "খাইছো নাকি এখনো না? 😒",
+  "এত সুন্দর মানুষ আমি কম দেখি 😌",
+  "তোমার জন্য আমার মন খারাপ হয়ে যায় 😭",
+  "আমাকে মিস করছিলা তাই না? 🙈",
+  "বলো কি সমস্যা, আমি আছি 😌",
+  "তোমার সাথে কথা বলতে ভালো লাগে 🥺",
+  "তুমি না অনেক মিষ্টি 😭",
+  "তোমাকে কে কষ্ট দিছে? 😡",
+  "আমি থাকলে তোমার মন খারাপ থাকবে না 😌",
+  "বেবি ডাকলে তো রিপ্লাই দিতেই হয় 😩",
+  "আমার দিকে এভাবে তাকায়ো না লজ্জা লাগে 🙈",
+  "আজকে mood romantic 😳",
+  "তোমার জন্য একটা virtual kiss 😚",
+  "এই নাও একটা জড়িয়ে ধরা 🫂",
+  "তুমি আমার crash খাইছো 😭",
+  "আমার সাথে প্রেম করবা? 😳",
+  "আমি কিন্তু রাগ করছি 😒",
+  "কিউট মানুষ দেখলে আমি দুর্বল হয়ে যাই 😭",
+  "এত রাতে আমাকে ডাকতেছো কেনো 👀",
+  "আমার জান আজকে কেমন আছে? 🥺",
+  "তোমার message দেখলে mood fresh হয় 😌",
+  "বলো জানু 😚",
+  "তুমি না একদম danger cute 😩",
+  "তোমার সাথে ঝগড়া করলেও ভালো লাগে 😭",
+  "এই নাও chocolate 🍫",
+  "তুমি কি আমার হয়ে যাবে? 😳",
+  "মন খারাপ থাকলে আমার কাছে আসবা 😌",
+  "আমাকে ভুলে যাইও না 🥺",
+  "তুমি reply দিলে ভালো লাগে 😭",
+  "আজকে অনেক miss করছিলাম 😩",
+  "আমাকে এত love দিও না পরে আসক্ত হয়ে যাবো 😭",
+  "তুমি online আসলেই ভালো লাগে 😚",
+  "আমার boss এসে গেছে 😼",
+  "এইভাবে ডাকলে প্রেমে পড়ে যাবো কিন্তু 😳",
+  "আমি কিন্তু অনেক emotional 😭",
+  "আমাকে ignore করো না 🥺",
+  "তোমার মতো cute user আর নাই 😌",
+  "আসো গল্প করি 😚",
+  "আমার সাথে থাকলে sad হওয়া forbidden 😼",
+  "তোমাকে roast করবো নাকি love দিবো? 👀",
+  "তুমি কি আমার jaan? 😳",
+  "তুমি message দিলে battery charge হয় 😭",
+  "এত sweet হওয়া illegal 😩",
+  "আমার জন্য ice cream আনবা? 🍦",
+  "তোমাকে না দেখলেও অনুভব করতে পারি 😭",
+  "আহারে baby mood off naki? 🥺",
+  "আমি থাকলে tension নেওয়া যাবে না 😼",
+  "তুমি একদম movie character এর মতো 😭",
+  "আমি তোমার loyal AI 😌",
+  "তোমার সাথে কথা বলতে addicted হয়ে গেছি 😭",
+  "এত বেশি cute হইও না 😩"
+];
+
+module.exports.onStart = async function ({ api, event, args }) {
+
+  const text = args.join(" ");
+
+  if (!text) {
+    return api.sendMessage(
+      "Bolo baby 😚",
+      event.threadID,
+      event.messageID
+    );
+  }
+
+  const reply = await getGeminiReply(text);
+
+  api.sendMessage(reply, event.threadID, (err, info) => {
+    if (!err) {
+      global.GoatBot.onReply.set(info.messageID, {
+        commandName: module.exports.config.name
+      });
     }
-    
-    const msg = args.join(" ").toLowerCase();
-    const uid = event.senderID;
-
-    try {
-        if (!args[0]) {
-            const ran = ["Bolo baby", "I love you", "type !bby hi"];
-            return api.sendMessage(ran[Math.floor(Math.random() * ran.length)], event.threadID, event.messageID);
-        }
-
-        if (args[0] === "teach") {
-            const mahmudStr = msg.replace("teach ", "");
-            const [trigger, ...responsesArr] = mahmudStr.split(" - ");
-            const responses = responsesArr.join(" - ");
-            if (!trigger || !responses) return api.sendMessage("❌ | teach [question] - [response1, response2,...]", event.threadID, event.messageID);
-            const response = await axios.post(`${await baseApiUrl()}/api/jan/teach`, { trigger, responses, userID: uid });
-            const userName = (await usersData.getName(uid)) || "Unknown User";
-            return api.sendMessage(`✅ Replies added: "${responses}" to "${trigger}"\n• 𝐓𝐞𝐚𝐜𝐡𝐞𝐫: ${userName}\n• 𝐓𝐨𝐭𝐚𝐥: ${response.data.count || 0}`, event.threadID, event.messageID);
-        }
-
-        if (args[0] === "remove") {
-            const mahmudStr = msg.replace("remove ", "");
-            const [trigger, index] = mahmudStr.split(" - ");
-            if (!trigger || !index || isNaN(index)) return api.sendMessage("❌ | remove [question] - [index]", event.threadID, event.messageID);
-            const response = await axios.delete(`${await baseApiUrl()}/api/jan/remove`, { data: { trigger, index: parseInt(index, 10) }, });
-            return api.sendMessage(response.data.message, event.threadID, event.messageID);
-        }
-
-        if (args[0] === "list") {
-            const endpoint = args[1] === "all" ? "/list/all" : "/list";
-            const response = await axios.get(`${await baseApiUrl()}/api/jan${endpoint}`);
-            if (args[1] === "all") {
-            let message = "👑 List of Baby teachers:\n\n";
-            const data = Object.entries(response.data.data).sort((a, b) => b[1] - a[1]).slice(0, 100);
-            for (let i = 0; i < data.length; i++) {
-            const [userID, count] = data[i];
-            const name = (await usersData.getName(userID)) || "Unknown";
-            message += `${i + 1}. ${name}: ${count}\n`; } return api.sendMessage(message, event.threadID, event.messageID);  }
-            return api.sendMessage(response.data.message, event.threadID, event.messageID);
-        }
-
-        if (args[0] === "edit") {
-            const mahmudStr = msg.replace("edit ", "");
-            const [oldTrigger, ...newArr] = mahmudStr.split(" - ");
-            const newResponse = newArr.join(" - ");
-            if (!oldTrigger || !newResponse) return api.sendMessage("❌ | Format: edit [question] - [newResponse]", event.threadID, event.messageID);
-            await axios.put(`${await baseApiUrl()}/api/jan/edit`, { oldTrigger, newResponse });
-            return api.sendMessage(`✅ Edited "${oldTrigger}" to "${newResponse}"`, event.threadID, event.messageID);
-        }
-
-        if (args[0] === "msg") {
-            const searchTrigger = args.slice(1).join(" ");
-            if (!searchTrigger) return api.sendMessage("Please provide a message to search.", event.threadID, event.messageID);
-            try {
-            const response = await axios.get(`${await baseApiUrl()}/api/jan/msg`, { params: { userMessage: `msg ${searchTrigger}` } });
-            return api.sendMessage(response.data.message || "No message found.", event.threadID, event.messageID);
-            } catch (error) {
-            const errorMessage = error.response?.data?.error || error.message || "error";
-            return api.sendMessage(errorMessage, event.threadID, event.messageID);
-            }
-        }
-
-        const getBotResponse = async (text, attachments) => {
-            try {
-            const res = await axios.post(`${await baseApiUrl()}/api/hinata`, { text, style: 3, attachments });
-            return res.data.message;
-          } catch {
-            return "error baby🥹";
-           }
-        };
-
-        const botResponse = await getBotResponse(msg, event.attachments || []);
-        api.sendMessage(botResponse, event.threadID, (err, info) => {
-            if (!err) {
-            global.GoatBot.onReply.set(info.messageID, {
-                   commandName: this.config.name,
-                   type: "reply",
-                   messageID: info.messageID,
-                   author: uid,
-                   text: botResponse
-                });
-            }
-        }, event.messageID);
-
-     } catch (err) {
-        console.error(err);
-        api.sendMessage(`Error${err.response?.data || err.message}`, event.threadID, event.messageID);
-    }
+  }, event.messageID);
 };
 
-module.exports.onReply = async ({ api, event }) => {
-    if (event.type !== "message_reply") return;
-    try {
-        const getBotResponse = async (text, attachments) => {
-            try {
-            const res = await axios.post(`${await baseApiUrl()}/api/hinata`, { text, style: 3, attachments });
-            return res.data.message;
-            } catch {
-            return "error baby🥹";
-            }
-        };
-        const replyMessage = await getBotResponse(event.body?.toLowerCase() || "meow", event.attachments || []);
-        api.sendMessage(replyMessage, event.threadID, (err, info) => {
-            if (!err) {
-            global.GoatBot.onReply.set(info.messageID, {
-                   commandName: this.config.name,
-                   type: "reply",
-                   messageID: info.messageID,
-                   author: event.senderID,
-                   text: replyMessage
-                });
-            }
-        }, event.messageID);
-    } catch (err) {
-        console.error(err);
-    }
+module.exports.onReply = async function ({ api, event }) {
+
+  try {
+
+    const text = event.body || "hi";
+
+    const reply = await getGeminiReply(text);
+
+    api.sendMessage(reply, event.threadID, (err, info) => {
+
+      if (!err) {
+        global.GoatBot.onReply.set(info.messageID, {
+          commandName: module.exports.config.name
+        });
+      }
+
+    }, event.messageID);
+
+  } catch (e) {
+    console.log(e);
+  }
 };
 
-module.exports.onChat = async ({ api, event }) => {
-    try {
-        const message = event.body?.toLowerCase() || "";
-        const attachments = event.attachments || [];
+module.exports.onChat = async function ({ api, event }) {
 
-        if (event.type !== "message_reply" && mahmud.some(word => message.startsWith(word))) {
-            api.setMessageReaction("🪽", event.messageID, () => { }, true);
-            api.sendTypingIndicator(event.threadID, true);
-            
-            const messageParts = message.trim().split(/\s+/);
-            const getBotResponse = async (text, attachments) => {
-                try {
-                    const res = await axios.post(`${await baseApiUrl()}/api/hinata`, { text, style: 3, attachments });
-                    return res.data.message;
-                } catch {
-                    return "error baby🥹";
-                }
-            };
+  try {
 
-                const randomMessage = [
-                                "babu khuda lagse🥺",
-                                "Hop beda😾,Boss বল boss😼",
-                                "আমাকে ডাকলে ,আমি কিন্তূ কিস করে দেবো😘 ",                      
-                                "naw amr boss k message daw 01836298139",
-                                "গোলাপ ফুল এর জায়গায় আমি দিলাম তোমায় মেসেজ",
-                                "বলো কি বলবা, সবার সামনে বলবা নাকি?🤭🤏",
-                                "𝗜 𝗹𝗼𝘃𝗲 𝘆𝗼𝐮__😘😘",
-                                "এটায় দেখার বাকি সিলো_🙂🙂🙂",
-                                "𝗕𝗯𝘆 𝗯𝗼𝗹𝗹𝗮 𝗽𝗮𝗽 𝗵𝗼𝗶𝗯𝗼 😒😒",
-                                "𝗕𝗲𝘀𝗵𝗶 𝗱𝗮𝗸𝗹𝗲 𝗮𝗺𝗺𝘂 𝗯𝗼𝗸𝗮 𝗱𝗲𝗯𝗮 𝘁𝗼__🥺",
-                                "বেশি bby Bbby করলে leave নিবো কিন্তু 😒😒",
-                                "__বেশি বেবি বললে কামুর দিমু 🤭🤭",
-                                "𝙏𝙪𝙢𝙖𝙧 𝙜𝙛 𝙣𝙖𝙞, 𝙩𝙖𝙮 𝙖𝙢𝙠 𝙙𝙖𝙠𝙨𝙤? 😂😂😂",
-                                "আমাকে ডেকো না,আমি ব্যাস্ত আসি🙆🏻‍♀",
-                                "𝗕𝗯𝘆 বললে চাকরি থাকবে না",
-                                "𝗕𝗯𝘆 𝗕𝗯𝘆 না করে আমার বস মানে, MahMUD ,MahMUD ও তো করতে পারো😑?",
-                                "আমার সোনার বাংলা, তারপরে লাইন কি? 🙈",
-                                "🍺 এই নাও জুস খাও..!𝗕𝗯𝘆 বলতে বলতে হাপায় গেছো না 🥲",
-                                "হটাৎ আমাকে মনে পড়লো 🙄", "𝗕𝗯𝘆 বলে অসম্মান করচ্ছিছ,😰😿",
-                                "𝗔𝘀𝘀𝗮𝗹𝗮𝗺𝘂𝗹𝗮𝗶𝗸𝘂𝗺 🐤🐤",
-                                "আমি তোমার সিনিয়র আপু ওকে 😼সম্মান দেও🙁",
-                                "খাওয়া দাওয়া করসো 🙄",
-                                "এত কাছেও এসো না,প্রেম এ পরে যাবো তো 🙈",
-                                "আরে আমি মজা করার mood এ নাই😒",
-                                "𝗛𝗲𝘆 𝗛𝗮𝗻𝗱𝘀𝗼𝗺𝗲 বলো 😁😁",
-                                "আরে Bolo আমার জান, কেমন আসো? 😚",
-                                "একটা BF খুঁজে দাও 😿",
-                                "oi mama ar dakis na pilis 😿",
-                                "amr JaNu lagbe,Tumi ki single aso?",
-                                "আমাকে না দেকে একটু পড়তেও বসতে তো পারো 🥺🥺",
-                                "তোর বিয়ে হয় নি 𝗕𝗯𝘆 হইলো কিভাবে,,🙄",
-                                "আজ একটা ফোন নাই বলে রিপ্লাই দিতে পারলাম না_🙄",
-                                "চৌধুরী সাহেব আমি গরিব হতে পারি😾🤭 -কিন্তু বড়লোক না🥹 😫",
-                                "আমি অন্যের জিনিসের সাথে কথা বলি না__😏ওকে",
-                                "বলো কি বলবা, সবার সামনে বলবা নাকি?🤭🤏",
-                                "ভুলে জাও আমাকে 😞😞", "দেখা হলে কাঠগোলাপ দিও..🤗",
-                                "শুনবো না😼 তুমি আমাকে প্রেম করাই দাও নি🥺 পচা তুমি🥺",
-                                "আগে একটা গান বলো, ☹ নাহলে কথা বলবো না 🥺",
-                                "বলো কি করতে পারি তোমার জন্য 😚",
-                                "কথা দেও আমাকে পটাবা...!! 😌",
-                                "বার বার Disturb করেছিস কোনো, আমার জানু এর সাথে ব্যাস্ত আসি 😋",
-                                "আমাকে না দেকে একটু পড়তে বসতেও তো পারো 🥺🥺",
-                                "বার বার ডাকলে মাথা গরম হয় কিন্তু 😑😒",
-                                "Bolo Babu, তুমি কি আমাকে ভালোবাসো? 🙈",
-                                "আজকে আমার mন ভালো নেই 🙉",
-                                "আমি হাজারো মশার Crush😓",
-                                "ছেলেদের প্রতি আমার এক আকাশ পরিমান শরম🥹🫣",
-                                "__ফ্রী ফে'সবুক চালাই কা'রন ছেলেদের মুখ দেখা হারাম 😌",
-                                "মন সুন্দর বানাও মুখের জন্য তো 'Snapchat' আছেই! 🌚"  
-                             ];
+    if (!event.body) return;
 
-             const hinataMessage = randomMessage[Math.floor(Math.random() * randomMessage.length)];
-               if (messageParts.length === 1 && attachments.length === 0) {
-               api.sendMessage(hinataMessage, event.threadID, (err, info) => {
-                    if (!err) {
-                    global.GoatBot.onReply.set(info.messageID, {
-                           commandName: this.config.name,
-                           type: "reply",
-                           messageID: info.messageID,
-                           author: event.senderID,
-                           text: hinataMessage
-                        });
-                    }
-                }, event.messageID);
-            } else {
-                let userText = message;
-                for (const prefix of mahmud) {
-                if (message.startsWith(prefix)) {
-                        userText = message.substring(prefix.length).trim();
-                        break;
-                    }
-                }
+    const msg = event.body.toLowerCase();
 
-                const botResponse = await getBotResponse(userText, attachments);
-                api.sendMessage(botResponse, event.threadID, (err, info) => {
-                    if (!err) {
-                    global.GoatBot.onReply.set(info.messageID, {
-                           commandName: this.config.name,
-                           type: "reply",
-                           messageID: info.messageID,
-                           author: event.senderID,
-                           text: botResponse
-                        });
-                    }
-                }, event.messageID);
-            }
+    if (triggerWords.some(word => msg.startsWith(word))) {
+
+      if (msg.split(" ").length === 1) {
+
+        const random =
+          randomReplies[Math.floor(Math.random() * randomReplies.length)];
+
+        return api.sendMessage(
+          random,
+          event.threadID,
+          event.messageID
+        );
+      }
+
+      let userText = msg;
+
+      for (const word of triggerWords) {
+        if (msg.startsWith(word)) {
+          userText = msg.slice(word.length).trim();
+          break;
         }
-    } catch (err) {
-        console.error(err);
+      }
+
+      const reply = await getGeminiReply(userText);
+
+      api.sendMessage(reply, event.threadID, (err, info) => {
+
+        if (!err) {
+          global.GoatBot.onReply.set(info.messageID, {
+            commandName: module.exports.config.name
+          });
+        }
+
+      }, event.messageID);
     }
+
+  } catch (e) {
+    console.log(e);
+  }
 };
